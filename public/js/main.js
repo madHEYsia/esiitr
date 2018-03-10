@@ -130,7 +130,7 @@
             e.stopPropagation();
         });
             
-        searchField.attr({placeholder: 'Type topics', autocomplete: 'off'});
+        searchField.attr({placeholder: 'Type topic', autocomplete: 'off'});
     
     };
 

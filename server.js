@@ -18,6 +18,8 @@ app.use(expressValidator());
 //RESTful route
 var router = express.Router();
 
+var PythonShell = require('python-shell');
+
 /*------------------------------------------------------
 *  This is router middleware,invoked everytime we hit url
 *  we can use this for doing validation,authetication
@@ -27,6 +29,15 @@ router.use(function(req, res, next) {
     next();
 });
 
+// var options = {
+// 	  args: ['salt']
+// };
+
+// PythonShell.run('C:/Users/submi/Desktop/wikipedia-question-generator/wikitrivia/scripts/wikitrivia.py', options, function (err, results) {
+//   if (err) throw err;
+//   // results is an array consisting of messages collected during execution
+//   console.log(results);
+// });
 
 // -----------------------------------------------------------------------------
 
@@ -40,12 +51,18 @@ a validation everytime route /api/user/:user_id it hit.
 ------------------------------------------------------*/
 
 var home = router.route('/');
-
 home.get(function(req,res,next){
   res.render('index');
 });
 
-// //get data to update
+var pythonApi = router.route('/wiki');
+pythonApi.get(function(req,res,next){
+	console.log(req.params);
+	console.log(req.query);
+	res.send("Hi it's working");
+});
+
+
 // home.get(function(req,res,next){
 
 //     var user_id = req.params.user_id;

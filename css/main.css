@@ -1741,7 +1741,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .s-pageheader--home {
-   padding-top: 222px;
+   padding-top: 160px;
 }
 
 .header {
@@ -3056,8 +3056,7 @@ html.no-csstransitions .featured {
  * ------------------------------------------------------------------- */
 .s-extra {
    background-color: #FFFFFF;
-   padding-top: 7.8rem;
-   padding-bottom: 9rem;
+   padding-top: 4rem;
    font-family: "metropolis-regular", sans-serif;
    font-size: 1.5rem;
    line-height: 1.8;
@@ -3148,9 +3147,9 @@ html.no-csstransitions .featured {
 /* -------------------------------------------------------------------
  * ## tags
  * ------------------------------------------------------------------- */
-.s-extra .tags-wrap {
+/*.s-extra .tags-wrap {
    max-width: 900px;
-}
+}*/
 
 .s-extra .tags {
    text-align: center;

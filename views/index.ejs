@@ -127,7 +127,7 @@
         <div class="masonry">
             <div class="grid-sizer"></div>
 
-        <% if (data.length>0) {
+        <% if (data!=undefined && data.length>0) {
             var demoData ="";
             console.log(data); %>
             <span> saddvfdf </span>
@@ -623,24 +623,34 @@
             for(var i = 0;i < sample.length;i++) {
             %>
                 <article class="masonry__brick entry format-standard" data-aos="fade-up">
-                    <div class="entry__text">
+                    <div class="entry__text" style="padding-bottom: 2rem;">
                         <div class="entry__header">
-                            <h1 class="entry__title"><a href="single-standard.html"><%=sample[i].question%></a></h1>
+                            <p class="entry__title" style="font-size: 1.6rem; margin-bottom: 0;"><%=sample[i].question%></p>
                         </div>
                         <div class="entry__excerpt">
-                            <h2><%=sample[i].answer%></h2>
+                            <h5 style="margin: 0 0 1.8rem 0">Ans:  <span style="color: green;"><%=sample[i].answer%></span></h5>
+                            <%  for(var j = 0;j < sample[i].similar_words.length ;j++){
+                                if (j==0) { %>
+                                    <span>Other options:</span>
+                                <% } %>
+                                <label style="margin: 0;">
+                                    <input type="checkbox">
+                                    <span class="label-text"><%=sample[i].similar_words[j]%></span>
+                                </label>
+                            <% } %>
+                            <input style="height: 4rem; margin-bottom: 0;" class="full-width" type="text" placeholder="comma separated options" id="sampleInput">
                         </div>
                         <div class="entry__meta">
                             <span class="entry__meta-links">
-                                <a href="category.html"><%=sample[i].title%></a> 
+                                Tag: <a href="/wiki?s=<%=sample[i].title.replace(" ","+")%>"><%=sample[i].title%></a> 
                             </span>
+                            <p class="btn btn--primary full-width" style="margin-bottom: 0px;">Add to paper</p>
                         </div>
                     </div>
                 </article> <!-- end article -->
 
 
-        <% } 
-            }%>
+        <% } }%>
             </div> <!-- end masonry -->
         </div> <!-- end masonry-wrap -->
     </section> <!-- s-content -->

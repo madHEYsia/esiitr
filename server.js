@@ -48,18 +48,24 @@ home.get(function(req,res,next){
 var pythonApi = router.route('/wiki');
 pythonApi.get(function(req,res,next){
 	var options = {
-		args: req.query.s.split(" ")		
+		args: req.query.s		
 	};
 
-	PythonShell.run('C:/Users/submi/Desktop/wikipedia-question-generator/wikitrivia/scripts/wikitrivia.py', options, function (err, results) {
-	console.log(results);
+	console.log(req.query.s);
 
+	PythonShell.run('C:/Users/submi/Desktop/wikipedia-question-generator/wikitrivia/scripts/wikitrivia.py', options, function (err, results) {
 
 	if (err) 
 		res.render('index', {data: ""});
 	else
 		res.render('index', {data: results});
 	});
+});
+
+var paper = router.route('/paper');
+paper.get(function(req,res,next){
+	var localInfo = JSON.parse(localStorage.getItem("info") || "[]");		
+	res.render('paper', {data: localInfo});
 });
 
 //now we need to apply our router here

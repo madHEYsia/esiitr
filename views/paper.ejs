@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Question Maker</title>
+        <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
+        <link rel="stylesheet" href="/../css/style.css">
+    </head>
+<body>
+  <% if(data.length){ 
+         for(var i = 0;i < data.length;i++) { %>
+         <h4>Q. <%=data[i].ques%></h4>
+          <% for(var j = 0;j < data[i].opt.split(",");i++) { %>%>
+   <% } } else {%>
+      <h1>NO question to display</h1>
+   <%}%>
+</body>
+</html>

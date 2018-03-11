@@ -23,6 +23,10 @@
     ================================================== -->
     <script src="/../js/modernizr.js"></script>
     <script src="/../js/pace.min.js"></script>
+    <script type="text/javascript">
+        if (localStorage.getItem("info")==null)
+            localStorage.setItem("info", JSON.stringify([]));
+    </script>
 
     <!-- favicons
     ================================================== -->
@@ -41,7 +45,7 @@
             <div class="header__content row">
 
                 <div class="header__logo">
-                    <a class="logo" href="index.html">
+                    <a class="logo" href="/">
                         <img src="/../images/logo.png" alt="Homepage">
                     </a>
                 </div> <!-- end header__logo -->
@@ -84,6 +88,7 @@
                         </li>
                         <li><a href="style-guide.html" title="">Schools</a></li>
                         <li><a href="style-guide.html" title="">Colleges</a></li>
+                        <li><a href="/paper" title="">View paper</a></li>
                     </ul> <!-- end header__nav -->
 
                     <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
@@ -103,19 +108,19 @@
 
         <div class="row bottom tags-wrap">
             <div class="col-full tags">
-                <h3>Topics</h3>
+                <h3>Trending Topics</h3>
                 <div class="tagcloud">
-                    <a href="#0">Salad</a>
-                    <a href="#0">Recipe</a>
-                    <a href="#0">Places</a>
-                    <a href="#0">Tips</a>
-                    <a href="#0">Friends</a>
-                    <a href="#0">Travel</a>
-                    <a href="#0">Exercise</a>
-                    <a href="#0">Reading</a>
-                    <a href="#0">Running</a>
-                    <a href="#0">Self-Help</a>
-                    <a href="#0">Vacation</a>
+                    <a href="/wiki?s=microsoft">Microsoft</a>
+                    <a href="/wiki?s=artificial+intelligence">Artificial Intelligence</a>
+                    <a href="/wiki?s=organic+chemistry">Organic Chemistry</a>
+                    <a href="/wiki?s=ms+dhoni">Mahender Singh Dhoni</a>
+                    <a href="/wiki?s=bjp">BJP</a>
+                    <a href="/wiki?s=iit+placements">IITs Placements</a>
+                    <a href="/wiki?s=north+korea">North Korea</a>
+                    <a href="/wiki?s=donald+trump">Donald Trump</a>
+                    <a href="/wiki?s=hydrogen+bomb">Hydrogen bomb</a>
+                    <a href="/wiki?s=indian+history">Indian History</a>
+                    <a href="/wiki?s=mark+zukerberg">Mark Zukerberg</a>
                 </div> <!-- end tagcloud -->
             </div> <!-- end tags -->
         </div> <!-- end tags-wrap -->
@@ -126,12 +131,52 @@
         <div class="row masonry-wrap">
         <div class="masonry">
             <div class="grid-sizer"></div>
+        <% if (data!=null && typeof data!=undefined && data!==undefined && data.length>0) {
+           for(var i = 3;i < data.length-3;i+=4) {
+                var answer = data[i++].trim();
+                answer = answer.substring(11,answer.length-2);
+                var question = data[i++].trim();
+                question = question.substring(13,question.length-2).replace("\\","");
+                var similar_words = [];
+                    ++i;
+                var temp = data[i].trim();
+                temp = temp.substring(1,temp.indexOf('"',1));
+                while(temp !== "title"){
+                    similar_words.push(temp);
+                    ++i;
+                var temp = data[i].trim();
+                temp = temp.substring(1,temp.indexOf('"',1));
+                }
+                var title = data[i].trim().substring(10,data[i].lastIndexOf('"'));
+             %>
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                    <div class="entry__text" style="padding-bottom: 2rem;">
+                        <div class="entry__header">
+                            <p class="entry__title" style="font-size: 1.6rem; margin-bottom: 0;"><%=question%></p>
+                        </div>
+                        <div class="entry__excerpt">
+                            <h5 style="margin: 0 0 1.8rem 0">Ans:  <span style="color: green;"><%=answer%></span></h5>
+                            <%  for(var j = 0;j < similar_words.length -1 ;j++){
+                                if (j==0) { %>
+                                    <span>Other options:</span>
+                                <% } %>
+                                <label style="margin: 0;">
+                                    <input type="checkbox" id="<%=i%><%=j%>">
+                                    <span class="label-text"><%=similar_words[j]%></span>
+                                </label>
+                            <% } %>
+                            <input style="height: 4rem; margin-bottom: 0;" class="full-width" type="text" placeholder="comma separated options" id="sampleInput" id="<%=i%><%=i%>>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                Tag: <a href="/wiki?s=<%=title.replace(" ","+")%>"><%=title%></a> 
+                            </span>
+                            <p class="btn btn--primary full-width" id="<%=i%>" style="margin-bottom: 0px;"  onclick="update('<%=i%>', '<%=question%>', '<%=answer%>','<%=similar_words%>')">Add to paper</p>
+                        </div>
+                    </div>
+                </article> <!-- end article -->
 
-        <% if (data!=undefined && data.length>0) {
-            var demoData ="";
-            console.log(data); %>
-            <span> saddvfdf </span>
-        <%} else 
+        <% } }else {
 
             var sample = [
     {
@@ -619,7 +664,7 @@
         "title": "Ukrainian Women's Volleyball Super League",
         "url": "https://en.wikipedia.org/wiki/Ukrainian_Women%27s_Volleyball_Super_League"
     }
-];          {
+];          
             for(var i = 0;i < sample.length;i++) {
             %>
                 <article class="masonry__brick entry format-standard" data-aos="fade-up">
@@ -634,23 +679,23 @@
                                     <span>Other options:</span>
                                 <% } %>
                                 <label style="margin: 0;">
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="<%=i%><%=j%>">
                                     <span class="label-text"><%=sample[i].similar_words[j]%></span>
                                 </label>
                             <% } %>
-                            <input style="height: 4rem; margin-bottom: 0;" class="full-width" type="text" placeholder="comma separated options" id="sampleInput">
+                            <input style="height: 4rem; margin-bottom: 0;" class="full-width" type="text" placeholder="comma separated options" id="<%=i%><%=i%>">
                         </div>
                         <div class="entry__meta">
                             <span class="entry__meta-links">
                                 Tag: <a href="/wiki?s=<%=sample[i].title.replace(" ","+")%>"><%=sample[i].title%></a> 
                             </span>
-                            <p class="btn btn--primary full-width" style="margin-bottom: 0px;">Add to paper</p>
+                            <p class="btn btn--primary full-width" id="<%=i%>" style="margin-bottom: 0px;" onclick="update('<%=i%>', '<%=sample[i].question%>', '<%=sample[i].answer%>','<%=sample[i].similar_words%>')">Add to paper</p>
                         </div>
                     </div>
                 </article> <!-- end article -->
 
 
-        <% } }%>
+        <% } } %>
             </div> <!-- end masonry -->
         </div> <!-- end masonry-wrap -->
     </section> <!-- s-content -->
@@ -690,6 +735,45 @@
         }});
         event.preventDefault();
     });
+</script>
+
+<script>
+    function update(pos, que, ans, options){
+        debugger;
+        var value = document.getElementById(pos).innerHTML;
+        if(value == "Add to paper"){
+            $('#'+pos).css({'background-color': 'red'});
+            document.getElementById(pos).innerHTML = "Remove from paper";
+            var inputValue = $('#'+pos+pos).val();
+            if(inputValue=="on" || inputValue==undefined)
+                inputValue = "";
+            if(options.trim().length>0)
+                options = options.split(",");
+            for (var i = 0; i < options.length; i++) {
+                if(document.getElementById(pos+i).checked)
+                    inputValue = inputValue=="" ? options[i] : inputValue+","+options[i];
+            }
+            var temp = {
+                ques : que,
+                answ: ans,
+                opt: inputValue+","+ans
+            }
+            var localInfo = JSON.parse(localStorage.getItem("info") || "[]");
+            localInfo.push(temp);
+            localStorage.setItem("info", JSON.stringify(localInfo));
+        }
+        else{
+            $('#'+pos).css({'background-color': 'black'});
+            document.getElementById(pos).innerHTML = "Add to paper";
+            var localInfo = JSON.parse(localStorage.getItem("info") || "[]");
+            for (var i = 0; i < localInfo.length; i++) {
+                if(localInfo[i].ques == que)
+                    localInfo.splice(i,1);
+            }
+            localStorage.setItem("info", JSON.stringify(localInfo));
+        }
+    }
+
 </script>
 
 </html>
